@@ -55,8 +55,6 @@
 # ...   p=s.recv()
 # ...   s.send(IP(dst="relay")/GRE()/p[IP])
 
-# TODO: remove all the stuff dealing with adding entries to the routing table. I think that is what is fucking things up.
-
 from scapy.all import *
 
 import os
@@ -98,9 +96,6 @@ def sigh(signal,frame):
 	
 	#remove all interfaces in global interface list
 	for int in interfaces:
-		# TODO: use built in scapy routing functionality
-		#call("route del -host " + int[1] + "/32 " + int[0], shell=True)
-		conf.route.delt(host=int[1], gw=defaultGw)
 		call("ifconfig " + int[0] + " down", shell=True)
 	
 	sys.exit(-1)
@@ -129,12 +124,6 @@ def doTcpConn(pkt):
 		# TODO: Verify the RandMAC() funciton returns a mac correctly formatted for this command
 		# TODO: Find out if you can use native scapy stuff to add a new interface
 		call("ifconfig " + newInterface + " " + destIP + " netmask 255.255.255.255 hw ether " + RandMAC(), shell=True)
-		# TODO: use built in scapy routing functionality
-		#call("route add -host " + destIP + "/32 " + newInterface + "", shell=True)
-		# TODO: verify you can specify a new interface with the scapy built in routing
-		# TODO: verify the scapy built in routing works with the L3RawSocket
-		# TODO: verify the gw for this should be 0.0.0.0. 
-		conf.route.add(host=dsetIP, gw=defaultGw, iface=newInterface)
 		
 		#add interface name to global interfaces list (using a lock)
 		interfacesLock.acquire()
@@ -167,8 +156,8 @@ def doTcpConn(pkt):
 	newPkt = IP(src=pkt[0][IP].src, dst=pkt[0][IP].dst)/TCP(flags=pkt[0][TCP].flags, sport=pkt[0][TCP].sport, dport=pkt[0][TCP].dport, seq=pkt[0][TCP].seq, ack=pkt[0][TCP].ack)/Raw(pkt[0][TCP].payload)
 	
 	# TODO: maybe we need to do this every time?
-	conf.L3socket #see what it is to begin with?
-	conf.L3socket = L3RawSocket
+	#conf.L3socket #see what it is to begin with?
+	#conf.L3socket = L3RawSocket
 	
 	# TODO: verify using the new socket works
 	s=conf.L3socket(iface=interface)
