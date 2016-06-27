@@ -10,5 +10,4 @@ This script was originally developed while I was at the USCC cyber quests cyber 
 This is pretty much the same thing as a Perl script that goes by the same name, inetsim.pl, but I wanted to develop this without re-writing the TCP/IP stack in python, so I wanted to utilize the built in stack of the Linux server you are running this script on. 
 
 # License
-GPL
-
+GNU GENERAL PUBLIC LICENSE Version 3
