@@ -1,16 +1,11 @@
 /* TEAM */
-Your title: Your name.
-Site: email, link to a contact form, etc.
-Twitter: your Twitter username.
-Location: City, Country.
-
-[...]
-
+Your title: bieeeennnnn
+Site: notgithub.com/beeeeean
+Twitter: @asdfasdfasdf
+Location: bbbbbbbbbbbbb
 
 /* THANKS */
-Name: name or url
-
-[...]
+Name: darlene
 
 
 /* SITE */
