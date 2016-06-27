@@ -12,6 +12,3 @@ This is pretty much the same thing as a Perl script that goes by the same name, 
 # License
 GNU GENERAL PUBLIC LICENSE Version 3
 
-# support
-none
-
