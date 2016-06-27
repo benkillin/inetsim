@@ -4,12 +4,8 @@ Site: email, link to a contact form, etc.
 Twitter: your Twitter username.
 Location: City, Country.
 
-[...]
-
-
 /* THANKS */
 Name: steve
-
 
 /* SITE */
 Last update: YYYY/MM/DD 
