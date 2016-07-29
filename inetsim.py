@@ -146,24 +146,14 @@ def doTcpConn(pkt):
 	#get interface name we need to send this packet to
 	interface = subprocess.Popen("ifconfig -a | grep -B 2 " + destIP + " | grep 'Link encap' | awk '{ print $1; }'", shell=True, stdout=subprocess.PIPE).communicate()[0]
 	# TODO: Use the already created newInterface variable??
-	
-	#forward packet to new interface
-	#packetLock.acquire()
-	
+
 	#TODO: make sure you get the other options for the IP and TCP layers that you forgot
-	#TODO: remove the destination IP from our routing table?
-	#TODO: ensure non zero checksum?
 	newPkt = IP(src=pkt[0][IP].src, dst=pkt[0][IP].dst)/TCP(flags=pkt[0][TCP].flags, sport=pkt[0][TCP].sport, dport=pkt[0][TCP].dport, seq=pkt[0][TCP].seq, ack=pkt[0][TCP].ack)/Raw(pkt[0][TCP].payload)
-	
-	# TODO: maybe we need to do this every time?
-	#conf.L3socket #see what it is to begin with?
-	#conf.L3socket = L3RawSocket
 	
 	# TODO: verify using the new socket works
 	s=conf.L3socket(iface=interface)
 	
 	s.send(newPkt, iface=interface) #TODO: This doesn't work.
-	#packetLock.release()
 	
 
 #####
@@ -194,6 +184,9 @@ def dispatch(pkt):
 		
 conf.L3socket = L3RawSocket
 #conf.L3socket = L3dnetSocket
+
+# TODO: automatically add the rule to drop reset (RST) packets to iptables in the script. 
+# Need the RST packets filtered out cuz by default the kernel will not know what to do with the packet before the fake interface has been created.
 
 while True:
 #	sniff(count=1,prn=lambda x: dispatch(x),lfilter=lambda x: x.haslayer(TCP),timeout=1)
